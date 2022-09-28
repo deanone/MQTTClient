@@ -13,7 +13,7 @@ import java.nio.file.Paths;
  * @version 0.1
  * @since 2018-05-12
  *
- * PropertiesParser class: A class representing a parser of a properties file (i.e., .properties).
+ * PropertiesParser class: A class representing a parser of a properties file.
  */
 public class PropertiesParser {
 	String propertiesFilename;
@@ -21,12 +21,22 @@ public class PropertiesParser {
     
     /**
      * Constructor.
-     * @param propertiesFilename the name of the .properties file
+     * @param propertiesFilename the name of the properties file
      */
     public PropertiesParser(String propertiesFilename) {
     	String cwd = Paths.get(".").toAbsolutePath().normalize().toString();
     	cwd += "\\target";
     	this.propertiesFilename = cwd + propertiesFilename;
+    }
+    
+    /**
+     * Constructor.
+     * @param propertiesMap a HashMap containing a set of properties (used for testing)
+     */
+    public PropertiesParser(HashMap<String, String> propertiesMap) {
+    	this.propertiesMap = new HashMap<String, String>();
+    	this.propertiesMap.putAll(propertiesMap);
+    	propertiesFilename = "";
     }
     
     /**
@@ -44,7 +54,7 @@ public class PropertiesParser {
             		continue;
             	}
             	String line = sc.nextLine();
-            	String[] items = line.split("=");
+            	String[] items = line.split("=");	// format in properties file: key=value (no space before and after =)
             	propertiesMap.put(items[0], items[1]);
             }
             sc.close();
